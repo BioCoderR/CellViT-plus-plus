@@ -1,0 +1,25 @@
+---
+# dataset paths
+wsi_paths: /projects/conco/gundla/root/Glioma_CLAM/rawdata/slides_40x/
+output_path: /projects/conco/gundla/root/Glioma_CLAM/CellViT/preprocessing_s256_m40/
+wsi_extensions: svs
+
+# basic setups
+patch_size: 256
+patch_overlap: 6.25
+target_mag: 40
+processes: 60
+#overwrite: True
+
+
+# annotation specific settings
+label_map_file: ./label_map.json
+
+# macenko stain normalization
+normalize_stains: True
+
+# finding patches
+min_intersection_ratio: 0.05
+
+# logging
+log_path:  /projects/conco/gundla/root/logs/CellViT/

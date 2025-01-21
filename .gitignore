@@ -2,10 +2,15 @@
 *.pt
 *.pth
 *.bin
-
+# container
+*.sif
+*.log
+*.def
 # Exception for .pth files in ./checkpoints/classifier
 !checkpoints/classifier/**/*.pth
-
+checkpoints/classifier/HIPT-256/
+checkpoints/classifier/SAM/
+checkpoints/classifier/Virchow/
 # vscode
 .vscode
 
@@ -49,3 +54,5 @@ cufile.log
 # annotation tool
 /annotation_tool/application
 /annotation_tool/Dockerfile
+## slurm
+slurm*.*
