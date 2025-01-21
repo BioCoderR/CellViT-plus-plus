@@ -1,8 +1,9 @@
-name: /home/jovyan/cellvit-data/environment/cellvit_env
+name: cellvitpp_env
 channels:
+  - conda-forge
   - nvidia
   - rapidsai
-  - conda-forge
+  
 dependencies:
   - _libgcc_mutex=0.1=conda_forge
   - _openmp_mutex=4.5=2_gnu
@@ -505,4 +506,4 @@ dependencies:
       - zipp==3.19.2
       - zope-event==5.0
       - zope-interface==6.4.post2
-prefix: /home/jovyan/cellvit-data/environment/cellvit_env
+prefix: /projects/envs/conda/psgudla/envs/cellvit_env

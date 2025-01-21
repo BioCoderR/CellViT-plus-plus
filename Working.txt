@@ -1,0 +1,10 @@
+## Testing the Pipeline for the CellViT plus plus
+Unknown slide measurement with forced mpp at 0.25 and Mag:20
+CUDA_VISIBLE_DEVICES=0,1 python3 ./cellvit/detect_cells.py \
+--model ./checkpoints/classifier/SAM/CellViT-SAM-H-x40-AMP.pth \
+--outdir ./output_preprocess/ \
+--geojson \
+--compression \
+--graph process_wsi \
+--wsi_path /projects/conco/gundla/root/Glioma_CLAM/rawdata/slides_40x/TCGA-02-0003-01Z-00-DX3.svs \
+--wsi_properties "{\"slide_mpp\": 0.25}"

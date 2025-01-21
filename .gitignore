@@ -2,10 +2,15 @@
 *.pt
 *.pth
 *.bin
-
+# container
+*.sif
+*.log
+*.def
 # Exception for .pth files in ./checkpoints/classifier
 !checkpoints/classifier/**/*.pth
-
+checkpoints/classifier/HIPT-256/
+checkpoints/classifier/SAM/
+checkpoints/classifier/Virchow/
 # vscode
 .vscode
 
@@ -39,6 +44,8 @@ cufile.log
 /logs_local
 /logs/Head-Evaluation
 
+## slurm
+slurm*
 # shell scripts for automation
 /runtime-scripts
 /scripts_local

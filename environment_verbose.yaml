@@ -1,4 +1,4 @@
-name: cellvit_env
+name: cellvitpp_env
 channels:
   - nvidia
   - rapidsai
