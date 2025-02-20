@@ -114,9 +114,9 @@ For more information about the viewer, see [below](#web-based-viewer)
 
 3. Install pytorch for your system  
    We used the following pytorch version:
-   - torch==2.2.1
-   - torchaudio==2.2.1
-   - torchvision==0.17.1
+   - torch==2.2.2
+   - torchaudio==2.2.2
+   - torchvision==0.17.2
 
     You can find installation instructions regarding pytorch here: https://pytorch.org/get-started/previous-versions/
 
@@ -368,7 +368,8 @@ This download example files that are placed inside the [`./test_database`](/test
     --model ./checkpoints/CellViT-SAM-H-x40-AMP.pth \
     --outdir ./test-results/x_40/minimal \
     process_wsi \
-    --wsi_path ./test_database/x40_svs/JP2K-33003-2.svs
+    --wsi_path ./test_database/MIDOG/001_pyramid.tiff
+    --wsi_properties "{\"slide_mpp\": 0.25, \"magnification\": 40}"
   ```
 
 </details>
@@ -393,9 +394,9 @@ This download example files that are placed inside the [`./test_database`](/test
   ```bash
   python3 ./cellvit/detect_cells.py \
     --model ./checkpoints/CellViT-SAM-H-x40-AMP.pth \
-    --outdir ./test-results/x_40/minimal \
+    --outdir ./test-results/MIDOG/filelist \
     process_dataset \
-    --wsi_path ./test_database/x40_svs/JP2K-33003-2.svs
+    --filelist ./test_database/MIDOG/example_filelist.csv
   ```
 
 </details>
@@ -407,6 +408,7 @@ This download example files that are placed inside the [`./test_database`](/test
   python3 ./cellvit/detect_cells.py \
     --model ./checkpoints/CellViT-SAM-H-x40-AMP.pth \
     --outdir ./test-results/x_40/minimal \
+    --classifier_path ./checkpoints/classifier/sam-h/consep.pth
     process_wsi \
     --wsi_path ./test_database/x40_svs/JP2K-33003-2.svs
   ```
