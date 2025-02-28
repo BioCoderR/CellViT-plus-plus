@@ -19,6 +19,11 @@ ___
 
 </div>
 
+
+> [!TIP]
+> To access the previous version (CellViT), follow this [link](https://github.com/TIO-IKIM/CellViT)
+
+
 ## Key Features
 
 ---
@@ -109,9 +114,9 @@ For more information about the viewer, see [below](#web-based-viewer)
 
 3. Install pytorch for your system  
    We used the following pytorch version:
-   - torch==2.2.1
-   - torchaudio==2.2.1
-   - torchvision==0.17.1
+   - torch==2.2.2
+   - torchaudio==2.2.2
+   - torchvision==0.17.2
 
     You can find installation instructions regarding pytorch here: https://pytorch.org/get-started/previous-versions/
 
@@ -141,7 +146,28 @@ Note: If the script runs successfully, your environment is ready for use. This a
 * We provide two environments files. The first one is the full conda export to get all packages we used to track the environment along with its dependencies (environment_full.yaml). The other one is a cleaned file that just includes important packages to get the code working (environment.yaml).
 
 ### Docker Image
-The Docker Image will be released upon acceptance.
+We created a beta-version for a docker image. You can pull the image from here: [ikimhoerst/cellvit:beta](https://hub.docker.com/repository/docker/ikimhoerst/cellvit/general). The docker container has all requirements preinstalled and is intended to run on a linux/amd64 plattform. We included the CellViT-SAM-H checkpoint and all classifiers for this model inside the container.
+
+#### Running the container
+To start the container, use the following command. Replace `/path/to/local/input` and `/path/to/local/output` with the appropriate local paths on your system to load slides into the container as well as saving results locally:
+```sh
+docker run --name cellvit++ \
+  --gpus all \ # gpus to use (default all)
+  --memory=8g \ # memory, we recommend more (16g)
+  -v /path/to/local/input:/workspace/CellViT-plus-plus/input-data \ This directory contains the input data mounted into the container.
+  -v /path/to/local/output:/workspace/CellViT-plus-plus/output-data \ This directory contains the output data mounted from the container.
+  -it \ # start terminal in workdir
+  ikimhoerst/cellvit:beta
+```
+To run inference, you can use the same commands as given in the [examples](#examples) below. However, you do not need to hand over the model checkpiont anymore, as CellViT-SAM-H is the default model in the container. Please consider your input and output paths accordingly. The classifiers are located inside the `./checkpoints/classifier/sam-h` folder likewise to this git repository.
+
+#### Using docker compose
+You can also use the given [`docker-compose.yaml`](./docker-compose.yaml) file. Replace `/path/to/local/input` and `/path/to/local/output` (under volumes) with the appropriate local paths on your system to load slides into the container as well as saving results locally. Consider increasing the memory to 16g or 32g, if memory problems occur.
+
+Start with:
+```sh
+docker-compose up
+```
 
 ### Model Checkpoints
 Checkpoints can be downloaded here from [Google-Drive](https://drive.google.com/drive/folders/1ujtMcxAr5kYYuvnbglfYZZnRH3ZOli79?usp=sharing). They should be placed inside the `./checkpoints` folder. Classifier checkpoints are already located inside the `./checkpoints/classifier` folder. Unfortunately, we cannot share all checkpoints due to their license.
@@ -171,6 +197,10 @@ Key aspects of the inference script:
 > :heavy_plus_sign: Single or multiple WSI processing without preprocessing
 
 ### CLI (In-Memory)
+> [!CAUTION]
+> Ray has problems when changing the GPU IDs without environment variables. We propose to set the environment variable `export CUDA_VISIBLE_DEVICES=xxx`instead of changing the default GPU with the `--gpu` flag.
+.
+
 If the data is prepared, use the [`detect_cells.py`](cellvit/detect_cells.py) script inside the `cellvit` folder to perform inference:
 
 `python3 ./cellvit/detect_cells.py --OPTIONS`
@@ -338,7 +368,8 @@ This download example files that are placed inside the [`./test_database`](/test
     --model ./checkpoints/CellViT-SAM-H-x40-AMP.pth \
     --outdir ./test-results/x_40/minimal \
     process_wsi \
-    --wsi_path ./test_database/x40_svs/JP2K-33003-2.svs
+    --wsi_path ./test_database/MIDOG/001_pyramid.tiff
+    --wsi_properties "{\"slide_mpp\": 0.25, \"magnification\": 40}"
   ```
 
 </details>
@@ -363,9 +394,9 @@ This download example files that are placed inside the [`./test_database`](/test
   ```bash
   python3 ./cellvit/detect_cells.py \
     --model ./checkpoints/CellViT-SAM-H-x40-AMP.pth \
-    --outdir ./test-results/x_40/minimal \
+    --outdir ./test-results/MIDOG/filelist \
     process_dataset \
-    --wsi_path ./test_database/x40_svs/JP2K-33003-2.svs
+    --filelist ./test_database/MIDOG/example_filelist.csv
   ```
 
 </details>
@@ -377,6 +408,7 @@ This download example files that are placed inside the [`./test_database`](/test
   python3 ./cellvit/detect_cells.py \
     --model ./checkpoints/CellViT-SAM-H-x40-AMP.pth \
     --outdir ./test-results/x_40/minimal \
+    --classifier_path ./checkpoints/classifier/sam-h/consep.pth
     process_wsi \
     --wsi_path ./test_database/x40_svs/JP2K-33003-2.svs
   ```
@@ -580,7 +612,7 @@ The viewer is dockerized and can be started with `docker compose -f ./viewer/doc
            label_codes: {"Tumor": 1, "Non-Tumor": 0, "Apoptosis": "A1"}
            draw_bounding_box: False
            ```
-       Note: In this example 6 labels are used for the annoation process
+       Note: In this example 6 labels are used for the annotation process
 
 </details>
 
@@ -598,7 +630,7 @@ The viewer is dockerized and can be started with `docker compose -f ./viewer/doc
 
 
 We provide an **example dataset** in the annotation_tool folder, which can be used out of the box. Just enter the path `/dataset` on the website after initial startup. Credentials for login are in the [annotation_tool/.env](annotation_tool/.env) file (user: admin, pw: admin1234).
-We will add scripts to convert cellvit annotations into the annoation tool dataset format upon acceptance.
+We will add scripts to convert cellvit annotations into the annotation tool dataset format upon acceptance.
 
 ## Citation
 
