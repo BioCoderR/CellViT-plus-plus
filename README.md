@@ -5,6 +5,11 @@
 <img src="https://img.shields.io/badge/PyTorch-EE4C2C?style=flat-square&logo=Pytorch&logoColor=white"/></a>
 ![Visitors](https://api.visitorbadge.io/api/combined?path=https%3A%2F%2Fgithub.com%2FTIO-IKIM%2FCellViT-plus-plus&label=Visitors&countColor=%2337d67a&style=flat)
 [![arXiv](https://img.shields.io/badge/arXiv-2501.05269-b31b1b.svg)](https://arxiv.org/abs/2501.05269)
+
+> [!IMPORTANT]
+> [![Update](https://img.shields.io/badge/Update-PyPI-green?labelColor=Red&style=flat&logo=pypi&link=https://pypi.org/project/cellvit/)](https://pypi.org/project/cellvit/)
+>
+> If you just want to run inference, checkout the [PyPI package](https://pypi.org/project/cellvit/) and the corresponding [GitHub repo](https://github.com/TIO-IKIM/CellViT-Inference)
 ___
 <p align="center">
   <img src="./docs/figures/banner.png"/>
